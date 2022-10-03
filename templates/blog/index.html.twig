@@ -15,10 +15,10 @@
             <article class="col-md-4 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1">
                  <h2>{{ item.title }}</h2>
             {# syntaxe twig : symfony accède à la propriété title via son getter#}
-             <div class="metadata">Ecrit le {{ item.createdAt |date('d/m/Y à H:i:s') }} dans la catégorie Politique</div>
+             <div class="metadata">Ecrit le {{ item.createdAt |date('d/m/Y à H:i:s') }} dans la catégorie {{ item.category.title }}</div>
             {# dte() est un filtre twig : il permet de convertir un objet DateTime en une chaîne de caractères#}
              <div class="content">
-             <img src="{{ item.image }}" alt="">
+             <img src="{{ item.image }}" class="img-fluid" alt="">
             {# raw est un filtre qui permet d'interpréter les balises html#}
              {{item.content|raw}}
             <a href="{{ path('blog_show',{id: item.id}) }}" class="btn btn-primary">Lire la suite</a>

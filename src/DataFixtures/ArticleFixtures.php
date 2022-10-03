@@ -2,27 +2,65 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\Category;
+use DateTime;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class ArticleFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // for($i = 1; $i <=10; $i++)
-        // {
-        //     $article = new Article;
-        //     // on instancie la classe Article qui se trouve dans le dossier App/ Entity
-        //     // Nous pouvons maintenant faire appel au setters pour insérer des données
+        $faker = \Faker\Factory::create('fr_FR');
 
-        //     $article->setTitle("Titre de l'article n°$i")
-        //             ->setContent("<p>Contenu de l'article n°$i</p>")
-        //             ->setImage("https://picsum.photos/250/150")
-        //             ->setCreatedAt(new \DateTime); //J'instancie la classe Datetime pour récupérer la date d'aujourd'hui
-        //     $manager->persist($article);
-        //     // persist() permet de faire persister l'article dans le temps et préparer son intsertion en BDD
-        // }
+        for ($i=1; $i <= 3; $i++) { 
+            $category = new Category;
+            $category->setTitle($faker->sentence(3, false));
+
+            $manager->persist($category);
+
+            // créer entre 4 et 6 articles
+            for ($j=1; $j <= mt_rand(4,6); $j++) { 
+                
+                $article = new Article;
+                
+                $content = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
+                // join() prend en param un séparateur et un tableu et ça renvoie une chaîne de caractère
+
+                $article->setTitle($faker->sentence())
+                        ->setContent($content)
+                        ->setImage($faker->imageUrl())
+                        ->setCreatedAt($faker->dateTimeBetween("-6 months"))
+                        ->setCategory($category)
+                ;
+
+                $manager->persist($article);
+            
+                for ($k=1; $k <= mt_rand(5,10); $k++) { 
+                    $comment = new Comment;
+
+                    $content = '<p>' . join('</p><p>', $faker->paragraphs(2)) . '</p>';
+
+                    $now = new \DateTime;
+                    $interval = $now->diff($article->getCreatedAt());
+                    $days = $interval->days;
+
+                    $comment->setAuthor($faker->name())
+                            ->setContent($content)
+                            ->setCreatedAt($faker->dateTime("-" . $days . " days"))
+                            ->setArticle($article)
+                    ;
+
+                    $manager->persist($comment);
+
+
+                }
+            
+            }
+
+        }
         $manager->flush();
         //flush() permet d'exécuter la requête SQL préparée grâce à persist()
     }

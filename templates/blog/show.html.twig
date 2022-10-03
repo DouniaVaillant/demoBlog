@@ -12,7 +12,8 @@
     <div class="metadata">Ecrit le {{ item.createdAt |date('d/m/Y à H:i:s') }} dans la catégorie Politique</div>
   
     <div class="content">
-    <img src="{{ item.image }}" alt="">
+    <img src="{{ item.image }}" class="img-fluid"
+ alt="">
     
         {{item.content|raw}}
         
@@ -21,6 +22,23 @@
 
 </article>
 
+</section>
+
+<h2 class="text-center mx-auto m-3">Commentaires</h2>
+<section id="commentaire" class="col-md-10 mx-auto">
+    {% for comment in item.comments %}
+        <div class="comment">
+            <div class="row">
+                <div class="col-md-3">
+                    {{ comment.author }} <br> (<small>{{ comment.createdAt|date('d/m/Y à H:i:s') }}</small>)
+                </div>
+                <div class="col-md-9">
+                    {{ comment.content|raw }}
+                </div>
+            </div>
+        </div>
+        <hr>
+    {% endfor%}
 </section>
 
 {% endblock %}

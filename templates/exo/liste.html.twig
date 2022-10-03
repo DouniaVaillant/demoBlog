@@ -13,6 +13,7 @@
         <th>Modèle</th>
         <th>Description</th>
         <th>Prix</th>
+        <th>Type de voiture</th>
         <th>Editer</th>
         <th>Supprimer</th>
     </tr>
@@ -26,6 +27,7 @@
             <td>{{ voiture.modele }}</td>
             <td>{{ voiture.description }}</td>
             <td>{{ voiture.prix }}€</td>
+            <td>{{ voiture.type.titre }}</td>
             <td>
                 <a href="{{ path('voiture_edit', {id: voiture.id}) }}" class="btn btn-info mt-2">Editer</a>
             </td>

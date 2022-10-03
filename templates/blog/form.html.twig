@@ -29,6 +29,8 @@
 }) }}
 
     {{ form_row(formArticle.image) }}
+    {{ form_row(formArticle.category) }}
+
 
     <button type="submit" class="btn btn-primary mt-2">
      {% if editMode %}
@@ -43,3 +45,9 @@
 
 
 {% endblock %}
+
+{# Créer l'entity Type (titre, nbRoues)
+Créer la relation entre Voiture et Type (une Voiture n'a qu'un Type, un Type peut avoir plusieurs Voiture
+Faire les migrations
+Faire les affichages et modifier le formulaire
+ #}
