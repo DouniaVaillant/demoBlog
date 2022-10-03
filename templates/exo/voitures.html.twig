@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+{% block title %} Accueil{% endblock %}
+
+<h1>{{voiture}}</h1>
+
+<p>{{description}}</p>
+
+
+</br>
+le prix est de : 
+{% if (prix > 1500 )and (voiture == "R5" )%}
+    {{prix}}
+{% else %}
+    N.C
+{% endif %}
+
+{% if description ends with "cher" %}
+<br>
+<a href="https://www.ferrari.com/fr-FR
+">si tu veux plus de truc cher</a>
+
+ {% endif %}
+
+
+{% endblock %}

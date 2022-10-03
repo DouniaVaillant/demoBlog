@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h1>
+    {% if editMode %}
+    Modification de l'article
+    {% else %}
+    Création d'un article
+    {% endif %}
+</h1>
+
+{#{{ form(formArticle) }}#}
+{{form_start(formArticle, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+})}}
+{# form_start() et form_end() permettend de délimiter un formulaire, e modifier ses champs, modifier la méthode #}
+
+{# form_widget() permet e gérer l'affichage d'un champ#}
+{# form_row() permet de gérer l'affichage d'un champ ET son label#}
+{{ form_row(formArticle.title) }}
+{{ form_row(formArticle.content, {
+    label: "Contenu",
+    attr: {
+        placeholder: "Contenu de l'article"
+    }
+}) }}
+
+    {{ form_row(formArticle.image) }}
+
+    <button type="submit" class="btn btn-primary mt-2">
+     {% if editMode %}
+        Enregistrer les modifications
+    {% else %}
+        Ajouter l'article
+    {% endif %}
+    </button>
+   
+{{form_end (formArticle)}}
+
+
+
+{% endblock %}
