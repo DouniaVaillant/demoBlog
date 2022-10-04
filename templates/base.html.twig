@@ -33,6 +33,19 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ path('blog_create')}}">Création d'un article</a>
         </li>
+        {% if app.user %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_logout')}}">Déconnexion</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_register')}}">Inscription</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
+        </li>
+        {% endif %}
+
       </ul>
     </div>
   </div>
@@ -44,3 +57,25 @@
     </body>
 
 </html>
+
+
+{# 
+. Exo route et condition app.user
+/ Ajouter dans la navbar les liens vers les routes app_register (création de compte), app_login (connexion) et app_logout (déconnexion) :
+
+-> si l'utilisateur est connecté, seul le lien vers app_logout doit être affiché
+-> sinon, l'utilisateur n'est pas connecté, donc les liens vers app_register et app_login doivent être affichés
+
+. Exo
+Modifier le code du demoblog afin que seuls les membres (les utilisateurs connectés) puissent poster un commentaire :
+-1 Supprimer la propriété "author" (avec getter et setter) de l'entity Comment
+-2 Recréer la propriété 'author' en tant que relation avec l'entity User : un utilisateur peut avoir plusieurs commentaires,  un commentaire n'appartient qu'à un seul utilisateur
+-3 Vider la table Comment puis faire les migrations
+4. Créer le formulaire d'ajout de commentaire : le formulaire ne contient que le champ 'content' pour taper le contenu du commentaire (make:form)
+5. Dans le fichier BlogController.php, dans la méthode show(), rajouter le code nécessaire à l'ajout du commentaire lorsque le formulaire est soumis et valide.
+6. Modifier le fichier show.html.twig pour afficher le formulaire d'ajout de commentaire seulement si l'utilisateur est connecté. Changer aussi
+l'affichage de l'auteur.
+7. Si l'utilisateur n'est pas connecté, afficher un lien vers la page de connexion.
+
+
+#}
