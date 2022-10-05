@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success text-center">{{ message }}</div>
+	{% endfor %}
+
+
+	<a href="{{ path('admin_new_articles') }}" class="btn btn-success">Ajouter un article</a>
+
+	<table class="table table-bordered text-center">
+
+		<thead>
+
+			<tr>
+				{% for data in colonnes %}
+					<th>{{ data }}</th>
+				{% endfor %}
+				<th>Catégorie</th>
+				<th>Editer</th>
+				<th>Supprimer</th>
+			</tr>
+
+		</thead>
+		<tbody>
+
+			{% for item in articles %}
+				<tr>
+					<td>{{ item.id }}</td>
+					<td>{{ item.title }}</td>
+					<td>{{ item.content }}</td>
+					<td><img src="{{ item.image }}" style="width: 150px;"></td>
+					<td>{{ item.createdAt|date('d/m/Y à H:i:s') }}</td>
+					<td>{{ item.category.title }}</td>
+					<td>
+						<a href="{{ path('admin_edit_articles', {id: item.id}) }}" class="text-dark">
+							<i class="fas fa-edit"></i>
+						</a>
+					</td>
+					<td>
+						<a href="{{ path('admin_delete_article', {id: item.id}) }}" onclick="return confirm('Voulez-vous supprimer?')" class="text-dark">
+							<i class="fas fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+
+
+	</table>
+
+{% endblock %}
